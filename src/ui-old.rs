@@ -43,9 +43,11 @@ struct SearchState {
 
 impl SearchState {
     fn new(title: &'static str) -> Self {
-        let mut state = Self::default();
-        state.title = title;
-        state
+        println!("neat");
+        Self {
+            title,
+            ..Self::default()
+        }
     }
 
     fn search(&mut self) -> Result<(), Box<dyn std::error::Error>> {
@@ -126,7 +128,7 @@ impl<B: Backend> TUIState<B> for SearchState {
             .style(Style::default().fg(Color::White))
             .borders(Borders::ALL)
             .title("Search Results");
-        if self.results.len() == 0 {
+        if self.results.is_empty() {
             let body = Paragraph::new(Text::raw("No results"))
                 .alignment(Alignment::Center)
                 .block(results_block);
